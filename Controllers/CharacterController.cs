@@ -26,7 +26,11 @@ namespace dotnet_rpg.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> GetSingle(int id) 
         {
-            return Ok(await _characterService.GetCharacterById(id));
+            var response = await _characterService.GetCharacterById(id);
+            if(response is null)
+                return NotFound(response);
+
+            return Ok(response);
         }
 
         [HttpPost]
